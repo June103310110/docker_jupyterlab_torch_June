@@ -90,13 +90,16 @@ case $task in
 		read port
 		dst=$HOME/junetest/docker_mount/$name
 		mkdir $dst
-		sudo docker run -idt --gpus all\ # 連結gpu
-			--restart unless-stopped\ # 自動重啟
-		       	--name $name \ # 容器的命名
-			-p $port:$port \ # 通訊埠小聯通
-			-v $dst:/workspace\ # 掛載，讓container和實體機器有可以共同存取的空間
-		       	$name:latest\ # 使用的image名稱(剛才build的
+        args=(--gpus all # 連結gpu
+                --restart unless-stopped # 自動重啟
+		       	--name $name # 容器的命名
+                -p $port:$port  # 通訊埠小聯通
+                -v $dst:/workspace # 掛載，讓container和實體機器有可以共同存取的空間
+		       	$name:latest # 使用的image名稱(剛才build的
 		       	/bin/bash -c "jupyter lab"   # 當啟動，順便用bash把jupyter lab開起來，有其他工作想執行也可以放這裡
+             )
+        sudo docker run -idt "${args[@]}"
+
 		echo " Run docker image $name, port $port, mount at $dst"
 		;;
 	c)
@@ -110,5 +113,4 @@ case $task in
 	*)
 		echo "Couldn’t find availbale task"
 esac
-
 ```

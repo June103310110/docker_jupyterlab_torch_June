@@ -28,6 +28,17 @@ nohup jupyter lab & # run jupyter lab on background
 
 
 ## intorduction
+###### build
+![image](https://user-images.githubusercontent.com/32012425/204074320-bbc707fe-d426-465e-b15f-23d713e39da0.png)
+> 記得要加上image-name
+###### 結果
+![image](https://user-images.githubusercontent.com/32012425/204074545-1d238670-3197-4bb0-a1e6-6257899acb77.png)
+###### docekr run
+![image](https://user-images.githubusercontent.com/32012425/204074556-30011adc-fd16-4d43-a385-817474f063bd.png)
+###### 執行
+![image](https://user-images.githubusercontent.com/32012425/204074578-f222ff69-fdb8-4fe7-9d66-4dc1bb168f2d.png)
+
+
 ### Dockerfile 
 ```
 # linux arm64, Ubuntu 18.04.5 LTS"
@@ -58,16 +69,6 @@ ENV SHELL=/bin/bash
 ```
 
 ### docker_bash.sh
-###### build
-![image](https://user-images.githubusercontent.com/32012425/204074320-bbc707fe-d426-465e-b15f-23d713e39da0.png)
-> 記得要加上image-name
-###### 結果
-![image](https://user-images.githubusercontent.com/32012425/204074545-1d238670-3197-4bb0-a1e6-6257899acb77.png)
-###### docekr run
-![image](https://user-images.githubusercontent.com/32012425/204074556-30011adc-fd16-4d43-a385-817474f063bd.png)
-###### 執行
-![image](https://user-images.githubusercontent.com/32012425/204074578-f222ff69-fdb8-4fe7-9d66-4dc1bb168f2d.png)
-
 ```
 #!/bin/bash
 name=$1

@@ -4,6 +4,7 @@ os: linux arm64(tested)
 
 ## From docker file building to jupyter lab setting
 1. download docker_deploy_app.zip from release
+`wget https://github.com/June103310110/docker_jupyterlab_torch_June/releases/download/stable/docker_deploy_app.zip -O docker_deploy_app.zip`
 2. unzip docker_deploy_app.zip
 > you will have 3 files. Dockerfile, init.sh, docker_bash.sh
 - Dockerfile: to build docker

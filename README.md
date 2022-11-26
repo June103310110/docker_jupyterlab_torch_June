@@ -28,6 +28,7 @@ nohup jupyter lab & # run jupyter lab on background
 
 
 ## intorduction
+### Dockerfile 
 ```
 # linux arm64, Ubuntu 18.04.5 LTS"
 FROM pytorch/pytorch:1.10.0-cuda11.3-cudnn8-devel #
@@ -54,4 +55,59 @@ ADD init.sh . # 把要用apt-get安裝的東西寫成bash載入
 RUN bash init.sh # apt-get install 各種模組
 
 ENV SHELL=/bin/bash
+```
+
+### docker_bash.sh
+###### build
+![image](https://user-images.githubusercontent.com/32012425/204074320-bbc707fe-d426-465e-b15f-23d713e39da0.png)
+> 記得要加上image-name
+###### 結果
+![image](https://user-images.githubusercontent.com/32012425/204074545-1d238670-3197-4bb0-a1e6-6257899acb77.png)
+###### docekr run
+![image](https://user-images.githubusercontent.com/32012425/204074556-30011adc-fd16-4d43-a385-817474f063bd.png)
+###### 執行
+![image](https://user-images.githubusercontent.com/32012425/204074578-f222ff69-fdb8-4fe7-9d66-4dc1bb168f2d.png)
+
+```
+#!/bin/bash
+name=$1
+
+#code to ignore case restrictions
+shopt -s nocasematch
+
+#case statement
+echo -e "(a) build\t(b) run\n(c) exec\t(d) stop"
+echo "Please enter the task to do"
+read task
+case $task in
+	a)
+		sudo docker build --rm -t $name . --no-cache
+		echo " Build image {$name}"
+		;;
+	b)
+		echo "set port for jupyter (default: 8899"		
+		read port
+		dst=$HOME/junetest/docker_mount/$name
+		mkdir $dst
+		sudo docker run -idt --gpus all\ # 連結gpu
+			--restart unless-stopped\ # 自動重啟
+		       	--name $name \ # 容器的命名
+			-p $port:$port \ # 通訊埠小聯通
+			-v $dst:/workspace\ # 掛載，讓container和實體機器有可以共同存取的空間
+		       	$name:latest\ # 使用的image名稱(剛才build的
+		       	/bin/bash -c "jupyter lab"   # 當啟動，順便用bash把jupyter lab開起來，有其他工作想執行也可以放這裡
+		echo " Run docker image $name, port $port, mount at $dst"
+		;;
+	c)
+		sudo docker exec -u root -ti $name bash
+		echo " Exec docker image"
+		;;
+	d)
+		echo "stop docker image {$name}"
+		sudo docker stop $name
+		;;
+	*)
+		echo "Couldn’t find availbale task"
+esac
+
 ```
